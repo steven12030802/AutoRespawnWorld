@@ -1,5 +1,7 @@
 package com.entiv.autorespawnworld;
 
+import com.entiv.autorespawnworld.scheduletask.ScheduleTask;
+import com.entiv.autorespawnworld.scheduletask.ScheduleTaskRunnable;
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -34,8 +36,9 @@ public class Main extends JavaPlugin {
             command.setExecutor(new MainCommand());
         }
 
+        setupScheduleTaskRunnable();
         setupRespawnWorld();
-        setupRespawnRunnable();
+        setupDeleteFileTask();
     }
 
     @Override
@@ -60,12 +63,18 @@ public class Main extends JavaPlugin {
                 continue;
             }
 
-            RespawnWorld respawnWorld = new RespawnWorld(worldName);
-            respawnWorld.load();
+            RegenWorldTask regenWorldTask = new RegenWorldTask(worldName);
+            regenWorldTask.load();
+        }
+    }
 
-            if (respawnWorld.dateConfig.getRespawnDateTime() == null) {
-                respawnWorld.dateConfig.setupTriggerTime();
-            }
+    private void setupDeleteFileTask() {
+        ConfigurationSection section = getConfig().getConfigurationSection("自动删除文件");
+        if (section == null) throw new NullPointerException("配置文件错误, 请检查配置文件");
+
+        for (String name : section.getKeys(false)) {
+            ScheduleTask deleteFileTask = new DeleteFileTask(name);
+            deleteFileTask.load();
         }
     }
 
@@ -73,9 +82,9 @@ public class Main extends JavaPlugin {
         return multiverseCore;
     }
 
-    private void setupRespawnRunnable() {
-        RespawnRunnable respawnRunnable = new RespawnRunnable();
-        respawnRunnable.runTaskTimer(this, 0, 100);
+    private void setupScheduleTaskRunnable() {
+        ScheduleTaskRunnable scheduleTaskRunnable = new ScheduleTaskRunnable();
+        scheduleTaskRunnable.runTaskTimer(this, 0, 100);
     }
 }
 

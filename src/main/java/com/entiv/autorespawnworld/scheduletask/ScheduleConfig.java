@@ -1,17 +1,18 @@
-package com.entiv.autorespawnworld;
+package com.entiv.autorespawnworld.scheduletask;
 
+import com.entiv.autorespawnworld.Main;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 
-public class DateConfig {
+public class ScheduleConfig {
 
-    private final String name;
+    String path;
 
-    public DateConfig(String name) {
-        this.name = name;
+    public ScheduleConfig(String path) {
+        this.path = path;
     }
 
     public String getDateConfig() {
@@ -22,27 +23,27 @@ public class DateConfig {
         return getConfig().getString("时间设置");
     }
 
-    public String getTriggerTime() {
+    public String getScheduleTime() {
         return getConfig().getString("触发时间");
     }
+
     public ConfigurationSection getConfig() {
-
         FileConfiguration config = Main.getInstance().getConfig();
-
-        ConfigurationSection section = config.getConfigurationSection("自动刷新世界." + name);
+        ConfigurationSection section = config.getConfigurationSection(path);
 
         if (section == null) throw new NullPointerException("配置文件错误, 请检查配置文件!");
 
         return section;
     }
 
-    public LocalDateTime getRespawnDateTime() {
 
-        String triggerTime = getTriggerTime();
+    public LocalDateTime getScheduleDateTime() {
 
-        if (triggerTime == null || triggerTime.equals("-1")) return null;
+        String scheduleTime = getScheduleTime();
 
-        String[] split = triggerTime.split(",");
+        if (scheduleTime == null || scheduleTime.equals("-1")) return null;
+
+        String[] split = scheduleTime.split(",");
 
         int year = Integer.parseInt(split[0]);
         int month = Integer.parseInt(split[1]);
@@ -55,12 +56,17 @@ public class DateConfig {
 
     public boolean isExpired() {
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime respawnDateTime = getRespawnDateTime();
+        LocalDateTime respawnDateTime = getScheduleDateTime();
+
+        if (respawnDateTime == null) {
+            setupNextScheduleTaskTime();
+            return false;
+        }
 
         return now.isAfter(respawnDateTime);
     }
 
-    public void setupTriggerTime() {
+    public void setupNextScheduleTaskTime() {
 
         String timeConfig = getTimeConfig();
         String dateConfig = getDateConfig();
@@ -82,8 +88,6 @@ public class DateConfig {
 
         getConfig().set("触发时间", format);
         Main.getInstance().saveConfig();
-
-
     }
 
     private LocalDateTime calculateRespawnTime(String mode, int day, int hour, int minute) {

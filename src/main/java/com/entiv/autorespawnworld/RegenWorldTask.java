@@ -1,66 +1,75 @@
 package com.entiv.autorespawnworld;
 
+import com.entiv.autorespawnworld.scheduletask.ScheduleConfig;
+import com.entiv.autorespawnworld.scheduletask.ScheduleTask;
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class RespawnWorld {
+public class RegenWorldTask implements ScheduleTask {
 
-    public final String name;
-    public final DateConfig dateConfig;
-    private static final List<RespawnWorld> worlds = new ArrayList<>();
+    private final String name;
+    private final World world;
+    private final ScheduleConfig scheduleConfig;
+    private final ConfigurationSection section;
 
-    public RespawnWorld(String name) {
+    public RegenWorldTask(String name) {
         this.name = name;
-        dateConfig = new DateConfig(name);
+        this.world = Bukkit.getWorld(name);
+
+        String path = "自动刷新世界." + name;
+
+        section = Main.getInstance().getConfig().getConfigurationSection(path);
+        scheduleConfig = new ScheduleConfig(path);
     }
 
-    public static List<RespawnWorld> getLoadedWorlds() {
-        return worlds;
+    @Override
+    public boolean isExpired() {
+        return scheduleConfig.isExpired();
     }
 
-    public void load() {
-        worlds.add(this);
-    }
-
-    public World getWorld() {
-        return Bukkit.getWorld(name);
+    @Override
+    public void runTask() {
+        regenWorld();
     }
 
     public List<String> getGameRuleSettings() {
-        return dateConfig.getConfig().getStringList("游戏规则设置");
+        return section.getStringList("游戏规则设置");
     }
 
-    public void respawnWorld() {
-        MultiverseCore multiverseCore = Main.getMultiverseCore();
+    public void regenWorld() {
 
-        boolean changeSeed = dateConfig.getConfig().getBoolean("更换种子");
+        MultiverseCore multiverseCore = Main.getMultiverseCore();
+        boolean changeSeed = section.getBoolean("更换种子");
 
         String seed;
 
         if (changeSeed) {
             seed = "";
         } else {
-            seed = String.valueOf(getWorld().getSeed());
+            seed = String.valueOf(world.getSeed());
 
         }
+
+        Message.sendConsole("&a━━━━━━━━━━━━━━  &e正在自动刷新 " + name + " 世界  &a━━━━━━━━━━━━━━");
+        Message.sendConsole(" ");
 
         boolean regenSuccess = multiverseCore.getMVWorldManager().regenWorld(name, true, true, seed);
 
         if (regenSuccess) {
             setWorldRule();
-            dateConfig.setupTriggerTime();
+            scheduleConfig.setupNextScheduleTaskTime();
         }
+
+        Message.sendConsole(" ");
+        Message.sendConsole("&a━━━━━━━━━━━━━━  &e世界 " + name + " 自动刷新完毕  &a━━━━━━━━━━━━━━");
+
     }
 
     private void setWorldRule() {
-
-        World world = getWorld();
 
         for (String string : getGameRuleSettings()) {
 
