@@ -1,45 +1,69 @@
 package com.entiv.autorespawnworld;
 
-import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
-import java.util.List;
 
-public class WorldSetting {
+public class DateConfig {
 
-    public final String name;
+    private final String name;
 
-    public WorldSetting(String name) {
+    public DateConfig(String name) {
         this.name = name;
     }
 
+    public String getDateConfig() {
+        return getConfig().getString("日期设置");
+    }
+
+    public String getTimeConfig() {
+        return getConfig().getString("时间设置");
+    }
+
+    public String getTriggerTime() {
+        return getConfig().getString("触发时间");
+    }
     public ConfigurationSection getConfig() {
 
         FileConfiguration config = Main.getInstance().getConfig();
 
         ConfigurationSection section = config.getConfigurationSection("自动刷新世界." + name);
 
-        if (section == null) throw new NullPointerException("世界" + name + "不存在, 请检查配置文件!");
+        if (section == null) throw new NullPointerException("配置文件错误, 请检查配置文件!");
 
         return section;
     }
 
-    public World getWorld() {
-        return Bukkit.getWorld(name);
+    public LocalDateTime getRespawnDateTime() {
+
+        String triggerTime = getTriggerTime();
+
+        if (triggerTime == null || triggerTime.equals("-1")) return null;
+
+        String[] split = triggerTime.split(",");
+
+        int year = Integer.parseInt(split[0]);
+        int month = Integer.parseInt(split[1]);
+        int day = Integer.parseInt(split[2]);
+        int hour = Integer.parseInt(split[3]);
+        int minute = Integer.parseInt(split[4]);
+
+        return LocalDateTime.of(year, month, day, hour, minute);
     }
 
-    public List<String> getGameRuleSettings() {
-        return getConfig().getStringList("游戏规则设置");
+    public boolean isExpired() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime respawnDateTime = getRespawnDateTime();
+
+        return now.isAfter(respawnDateTime);
     }
 
-    public void setupRespawnDate() {
+    public void setupTriggerTime() {
 
-        String dateConfig = getConfig().getString("刷新日期设置");
-        String timeConfig = getConfig().getString("刷新时间设置");
+        String timeConfig = getTimeConfig();
+        String dateConfig = getDateConfig();
 
         if (dateConfig == null || timeConfig == null) throw new NullPointerException("配置文件有误! 请检查配置文件!");
 
@@ -56,30 +80,10 @@ public class WorldSetting {
 
         String format = String.format("%d,%d,%d,%d,%d", respawnTime.getYear(), respawnTime.getMonthValue(), respawnTime.getDayOfMonth(), respawnTime.getHour(), respawnTime.getMinute());
 
-        getConfig().set("下次刷新时间", format);
+        getConfig().set("触发时间", format);
         Main.getInstance().saveConfig();
-    }
 
-    public LocalDateTime getRespawnDateTime() {
 
-        String date = getConfig().getString("下次刷新时间");
-
-        if (date == null || date.equals("-1")) return null;
-
-        String[] split = date.split(",");
-
-        int year = Integer.parseInt(split[0]);
-        int month = Integer.parseInt(split[1]);
-        int day = Integer.parseInt(split[2]);
-        int hour = Integer.parseInt(split[3]);
-        int minute = Integer.parseInt(split[4]);
-
-        return LocalDateTime.of(year, month, day, hour, minute);
-    }
-
-    public boolean isExpired() {
-        LocalDateTime now = LocalDateTime.now();
-        return now.isAfter(getRespawnDateTime());
     }
 
     private LocalDateTime calculateRespawnTime(String mode, int day, int hour, int minute) {
@@ -109,6 +113,5 @@ public class WorldSetting {
         } else {
             throw new NullPointerException("刷新时间配置错误, 请检查配置文件!");
         }
-
     }
 }

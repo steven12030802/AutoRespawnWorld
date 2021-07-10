@@ -6,4 +6,4 @@ api-version: "1.16"
 commands:
   AutoRespawnWorld:
     description: do something
-    aliases: [ some aliases ]
+    aliases: [ asw ]

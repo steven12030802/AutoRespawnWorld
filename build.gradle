@@ -11,11 +11,11 @@ repositories {
 
     mavenCentral()
     mavenLocal()
-
-    maven {
-        name "Bungee-Chat"
-        url 'https://repo.acrylicstyle.xyz/'
-    }
+//
+//    maven {
+//        name "Bungee-Chat"
+//        url 'https://repo.acrylicstyle.xyz/'
+//    }
 
     maven {
         name "Spigot-1.13.1"

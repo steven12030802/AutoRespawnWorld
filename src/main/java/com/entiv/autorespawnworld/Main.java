@@ -34,7 +34,7 @@ public class Main extends JavaPlugin {
             command.setExecutor(new MainCommand());
         }
 
-        setupRespawnTime();
+        setupRespawnWorld();
         setupRespawnRunnable();
     }
 
@@ -47,16 +47,24 @@ public class Main extends JavaPlugin {
         Message.sendConsole(message);
     }
 
-
-    private void setupRespawnTime() {
+    private void setupRespawnWorld() {
         ConfigurationSection section = getConfig().getConfigurationSection("自动刷新世界");
         if (section == null) throw new NullPointerException("配置文件错误, 请检查配置文件");
 
-        for (String world : section.getKeys(false)) {
-            WorldSetting worldSetting = new WorldSetting(world);
+        for (String worldName : section.getKeys(false)) {
 
-            if (worldSetting.getRespawnDateTime() == null) {
-                worldSetting.setupRespawnDate();
+            World world = Bukkit.getWorld(worldName);
+
+            if (world == null) {
+                Message.sendConsole("&c世界 &e" + worldName + "&c 不存在, 请检查配置文件");
+                continue;
+            }
+
+            RespawnWorld respawnWorld = new RespawnWorld(worldName);
+            respawnWorld.load();
+
+            if (respawnWorld.dateConfig.getRespawnDateTime() == null) {
+                respawnWorld.dateConfig.setupTriggerTime();
             }
         }
     }
@@ -66,21 +74,8 @@ public class Main extends JavaPlugin {
     }
 
     private void setupRespawnRunnable() {
-        ConfigurationSection section = getConfig().getConfigurationSection("自动刷新世界");
-
-        if (section == null) throw new NullPointerException("配置有误, 请检查配置文件");
-
-        for (String name : section.getKeys(false)) {
-
-            World world = Bukkit.getWorld(name);
-
-            if (world == null) {
-                Bukkit.getLogger().warning("世界" + name + "不存在, 请检查配置文件");
-                continue;
-            }
-
-            RespawnRunnable respawnRunnable = new RespawnRunnable(new WorldSetting(name));
-            respawnRunnable.runTaskTimer(this, 0, 100);
-        }
+        RespawnRunnable respawnRunnable = new RespawnRunnable();
+        respawnRunnable.runTaskTimer(this, 0, 100);
     }
 }
+
