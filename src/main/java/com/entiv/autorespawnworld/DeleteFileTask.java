@@ -30,7 +30,7 @@ public class DeleteFileTask implements ScheduleTask {
 
     @Override
     public boolean isExpired() {
-        return true;
+        return scheduleConfig.isExpired();
     }
 
     @Override
@@ -54,9 +54,9 @@ public class DeleteFileTask implements ScheduleTask {
                     }
 
                 } catch (FileSystemException e) {
-                    Message.sendConsole("&a文件 &e" + Paths.get(e.getFile()).getFileName() + " &a无法删除, 已跳过");
+                    Message.sendConsole("&c文件 &e" + Paths.get(e.getFile()).getFileName() + " &c无法删除, 已跳过");
                 }
-//
+
                 return FileVisitResult.CONTINUE;
             }
 
@@ -76,7 +76,7 @@ public class DeleteFileTask implements ScheduleTask {
             }
 
         } catch (NoSuchFileException e) {
-            Message.sendConsole("&9AutoSpawnWorld &6>> &c路径 " + e.getFile() + "不存在, 请检查配置文件");
+            Message.sendConsole("&c路径 &e" + e.getFile() + " &c不存在或没有文件, 已跳过");
         } catch (IOException e) {
             e.printStackTrace();
         }
