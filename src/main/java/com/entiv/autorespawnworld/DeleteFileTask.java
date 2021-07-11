@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -29,7 +30,7 @@ public class DeleteFileTask implements ScheduleTask {
 
     @Override
     public boolean isExpired() {
-        return scheduleConfig.isExpired();
+        return true;
     }
 
     @Override
@@ -66,10 +67,11 @@ public class DeleteFileTask implements ScheduleTask {
 
         try {
 
-            String serverPath = Bukkit.getServer().getWorldContainer().getCanonicalPath();
+            File dataFolder = Main.getInstance().getDataFolder();
+            String dir = dataFolder.getAbsoluteFile().getParentFile().getParentFile().toString();
 
             for (String configPath : section.getStringList("文件路径")) {
-                Path path = Paths.get(serverPath, configPath);
+                Path path = Paths.get(dir, configPath);
                 Files.walkFileTree(path, visitor);
             }
 
