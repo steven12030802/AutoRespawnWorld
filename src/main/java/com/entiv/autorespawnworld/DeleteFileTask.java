@@ -4,6 +4,7 @@ import com.entiv.autorespawnworld.scheduletask.ScheduleConfig;
 import com.entiv.autorespawnworld.scheduletask.ScheduleTask;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.plugin.Plugin;
 
 import java.io.IOException;
 import java.nio.file.*;
@@ -46,7 +47,7 @@ public class DeleteFileTask implements ScheduleTask {
 
                 try {
 
-                    if (isExpiredFile) {
+                    if (isExpiredFile || day <= 0) {
                         Files.delete(file);
                         Message.sendConsole("&a文件 &e" + file.getFileName() + " &a已删除");
                     }
@@ -72,6 +73,8 @@ public class DeleteFileTask implements ScheduleTask {
                 Files.walkFileTree(path, visitor);
             }
 
+        } catch (NoSuchFileException e) {
+            Message.sendConsole("&9AutoSpawnWorld &6>> &c路径 " + e.getFile() + "不存在, 请检查配置文件");
         } catch (IOException e) {
             e.printStackTrace();
         }
