@@ -2,9 +2,7 @@ package com.entiv.autorespawnworld;
 
 import com.entiv.autorespawnworld.scheduletask.ScheduleConfig;
 import com.entiv.autorespawnworld.scheduletask.ScheduleTask;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,17 +35,17 @@ public class DeleteFileTask implements ScheduleTask {
     public void runTask() {
 
         SimpleFileVisitor<Path> visitor = new SimpleFileVisitor<Path>() {
+
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
 
                 Instant fileTime = Files.readAttributes(file, BasicFileAttributes.class).lastAccessTime().toInstant();
-                int day = section.getInt("过期天数");
+                int day = section.getInt("保留天数", 0);
 
                 Instant expiredTime = fileTime.plus(Period.ofDays(day));
                 boolean isExpiredFile = fileTime.isAfter(Instant.from(expiredTime));
 
                 try {
-
                     if (isExpiredFile || day <= 0) {
                         Files.delete(file);
                         Message.sendConsole("&a文件 &e" + file.getFileName() + " &a已删除");
@@ -57,6 +55,11 @@ public class DeleteFileTask implements ScheduleTask {
                     Message.sendConsole("&c文件 &e" + Paths.get(e.getFile()).getFileName() + " &c无法删除, 已跳过");
                 }
 
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult postVisitDirectory(Path dir, IOException exc) {
                 return FileVisitResult.CONTINUE;
             }
 

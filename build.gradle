@@ -94,4 +94,4 @@ dependencies {
 }
 
 [compileJava,compileTestJava]*.options*.encoding = 'UTF-8'
-libsDirName = 'C:\\Users\\EnTIv\\Desktop\\minecraft\\server\\rpg\\plugins'
+libsDirName = 'C:\\Users\\EnTIv\\Desktop\\minecraft\\server\\paper-1.17\\plugins'
