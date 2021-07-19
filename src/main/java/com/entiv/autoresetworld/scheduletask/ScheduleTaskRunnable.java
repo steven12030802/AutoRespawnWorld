@@ -1,4 +1,4 @@
-package com.entiv.autorespawnworld.scheduletask;
+package com.entiv.autoresetworld.scheduletask;
 
 import org.bukkit.scheduler.BukkitRunnable;
 

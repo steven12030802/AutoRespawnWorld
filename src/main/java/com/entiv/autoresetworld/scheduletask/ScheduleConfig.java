@@ -1,6 +1,6 @@
-package com.entiv.autorespawnworld.scheduletask;
+package com.entiv.autoresetworld.scheduletask;
 
-import com.entiv.autorespawnworld.Main;
+import com.entiv.autoresetworld.Main;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 

@@ -1,7 +1,7 @@
-package com.entiv.autorespawnworld;
+package com.entiv.autoresetworld;
 
-import com.entiv.autorespawnworld.scheduletask.ScheduleTask;
-import com.entiv.autorespawnworld.scheduletask.ScheduleTaskRunnable;
+import com.entiv.autoresetworld.scheduletask.ScheduleTask;
+import com.entiv.autoresetworld.scheduletask.ScheduleTaskRunnable;
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import org.bukkit.Bukkit;
 import org.bukkit.World;

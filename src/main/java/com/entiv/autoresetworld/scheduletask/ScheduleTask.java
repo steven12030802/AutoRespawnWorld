@@ -1,6 +1,5 @@
-package com.entiv.autorespawnworld.scheduletask;
+package com.entiv.autoresetworld.scheduletask;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 

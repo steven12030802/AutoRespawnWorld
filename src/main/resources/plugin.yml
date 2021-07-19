@@ -1,4 +1,4 @@
-name: AutoRespawnWorld
+name: AutoResetWorld
 main: com.entiv.${name}.Main
 version: ${version}
 api-version: "1.16"
@@ -6,5 +6,4 @@ depend:
   - Multiverse-Core
 commands:
   AutoRespawnWorld:
-    description: do something
     aliases: [ asw ]

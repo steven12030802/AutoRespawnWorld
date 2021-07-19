@@ -1,4 +1,4 @@
-package com.entiv.autorespawnworld;
+package com.entiv.autoresetworld;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
