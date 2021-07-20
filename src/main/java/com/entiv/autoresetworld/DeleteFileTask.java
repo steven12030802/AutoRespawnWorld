@@ -75,11 +75,13 @@ public class DeleteFileTask implements ScheduleTask {
 
             for (String configPath : section.getStringList("文件路径")) {
                 Path path = Paths.get(dir, configPath);
-                Files.walkFileTree(path, visitor);
+                if (Files.exists(path)) {
+                    Files.walkFileTree(path, visitor);
+                } else {
+                    Message.sendConsole("&c路径 &e" + path + " &c不存在或没有文件, 已跳过");
+                }
             }
 
-        } catch (NoSuchFileException e) {
-            Message.sendConsole("&c路径 &e" + e.getFile() + " &c不存在或没有文件, 已跳过");
         } catch (IOException e) {
             e.printStackTrace();
         }
