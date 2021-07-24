@@ -1,5 +1,5 @@
 自动刷新世界:
-  # 在这里填写需要自动刷新的世界名
+  # 在这里填写需要自动刷新的世界名, world_resource 就是当前所需刷新的世界名
   world_resource:
 
     # day,1 代表每天刷新一次
@@ -21,11 +21,11 @@
     更换种子: true
 
     # 自动设置刷新世界后的游戏规则
-    游戏规则设置:
+    刷新执行指令:
       # 开启死亡不掉落
-      - 'keepInventory,true'
+      - 'mvgamerule keepInventory true world_resource'
       # 不显示死亡界面直接重生
-      - 'doImmediateRespawn,true'
+      - 'mvgamerule doImmediateRespawn true world_resource'
 
   # 支持添加更多世界, 复制上面的配置文件即可
 

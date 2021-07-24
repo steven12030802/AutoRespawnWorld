@@ -34,11 +34,11 @@ public class RegenWorldTask implements ScheduleTask {
     @Override
     public void runTask() {
         world.getPlayers().forEach(player -> player.performCommand("spawn"));
-        regenWorld();
+        Bukkit.getScheduler().runTaskLater(Main.getInstance(), this::regenWorld, 20L);
     }
 
-    public List<String> getGameRuleSettings() {
-        return section.getStringList("游戏规则设置");
+    public List<String> getResetCommand() {
+        return section.getStringList("刷新执行指令");
     }
 
     public void regenWorld() {
@@ -61,26 +61,22 @@ public class RegenWorldTask implements ScheduleTask {
         boolean regenSuccess = multiverseCore.getMVWorldManager().regenWorld(name, true, true, seed);
 
         if (regenSuccess) {
-            setWorldRule();
-            scheduleConfig.setupNextScheduleTaskTime();
+            runResetCommand();
+        } else {
+            Message.sendConsole("&9&l" + Main.getInstance().getName() + "&6&l>> &c世界重置失败, 请检查是否是主世界, 主世界无法刷新");
         }
+
+        scheduleConfig.setupNextScheduleTaskTime();
 
         Message.sendConsole(" ");
         Message.sendConsole("&a━━━━━━━━━━━━━━  &e世界 " + name + " 自动刷新完毕  &a━━━━━━━━━━━━━━");
 
     }
 
-    private void setWorldRule() {
+    private void runResetCommand() {
 
+        for (String command : getResetCommand()) {
 
-        for (String string : getGameRuleSettings()) {
-
-            String[] gameRules = string.split(",");
-
-            String name = gameRules[0];
-            String value = gameRules[1];
-
-            String command = "mvgamerule " + name + " " + value + " " + world.getName();
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
         }
     }
