@@ -76,8 +76,7 @@ public class RegenWorldTask implements ScheduleTask {
     private void runResetCommand() {
 
         for (String command : getResetCommand()) {
-
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%world%", world.getName()));
         }
     }
 }

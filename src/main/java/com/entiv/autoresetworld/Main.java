@@ -5,7 +5,8 @@ import com.entiv.autoresetworld.scheduletask.ScheduleTaskRunnable;
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.command.PluginCommand;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -30,11 +31,6 @@ public class Main extends JavaPlugin {
         Message.sendConsole(message);
 
         saveDefaultConfig();
-        PluginCommand command = Bukkit.getPluginCommand("AutoRespawnWorld");
-
-        if (command != null) {
-            command.setExecutor(new MainCommand());
-        }
 
         setupScheduleTaskRunnable();
         setupRespawnWorld();
@@ -85,6 +81,24 @@ public class Main extends JavaPlugin {
     private void setupScheduleTaskRunnable() {
         ScheduleTaskRunnable scheduleTaskRunnable = new ScheduleTaskRunnable();
         scheduleTaskRunnable.runTaskTimer(this, 0, 100);
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
+        if (sender.isOp()) {
+            Main plugin = Main.getInstance();
+            plugin.reloadConfig();
+
+            ScheduleTask.scheduleTasks.clear();
+
+            setupRespawnWorld();
+            setupDeleteFileTask();
+
+            Message.send(sender, "&9&l" + plugin.getName() + "&6&l >> &a配置文件重载完毕");
+        }
+
+        return true;
     }
 }
 

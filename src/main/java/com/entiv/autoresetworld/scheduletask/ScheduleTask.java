@@ -10,9 +10,7 @@ public interface ScheduleTask {
     // 到期后运行的任务
     void runTask();
 
-    default boolean isExpired() {
-        return true;
-    }
+    boolean isExpired();
 
     default void load() {
         scheduleTasks.add(this);

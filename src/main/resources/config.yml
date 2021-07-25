@@ -1,3 +1,4 @@
+# 自动刷新世界的功能
 自动刷新世界:
   # 在这里填写需要自动刷新的世界名, world_resource 就是当前所需刷新的世界名
   world_resource:
@@ -23,9 +24,12 @@
     # 刷新后自动执行指令
     刷新执行指令:
       # 开启死亡不掉落
-      - 'mvgamerule keepInventory true world_resource'
+      - 'mvgamerule keepInventory true %world%'
       # 不显示死亡界面直接重生
-      - 'mvgamerule doImmediateRespawn true world_resource'
+      - 'mvgamerule doImmediateRespawn true %world%'
+      # 如果你的服务器无区块占用世界会自动卸载(一般常见于 mod 服)
+      # 可以使用下面的指令保持重生点区块加载, 去掉 # 符号开启即可
+      #- 'mvm set keepspawninmemory true %world%'
 
   # 支持添加更多世界, 复制上面的世界配置文件后修改世界名即可
 
