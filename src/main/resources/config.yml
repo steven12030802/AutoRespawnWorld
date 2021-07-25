@@ -20,14 +20,14 @@
     # 是否更换地图种子
     更换种子: true
 
-    # 自动设置刷新世界后的游戏规则
+    # 刷新后自动执行指令
     刷新执行指令:
       # 开启死亡不掉落
       - 'mvgamerule keepInventory true world_resource'
       # 不显示死亡界面直接重生
       - 'mvgamerule doImmediateRespawn true world_resource'
 
-  # 支持添加更多世界, 复制上面的配置文件即可
+  # 支持添加更多世界, 复制上面的世界配置文件后修改世界名即可
 
 # 自动删除文件功能
 自动删除文件:

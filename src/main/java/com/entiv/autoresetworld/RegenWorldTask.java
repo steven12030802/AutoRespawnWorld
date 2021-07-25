@@ -34,7 +34,7 @@ public class RegenWorldTask implements ScheduleTask {
     @Override
     public void runTask() {
         world.getPlayers().forEach(player -> player.performCommand("spawn"));
-        Bukkit.getScheduler().runTaskLater(Main.getInstance(), this::regenWorld, 20L);
+        regenWorld();
     }
 
     public List<String> getResetCommand() {
@@ -52,25 +52,25 @@ public class RegenWorldTask implements ScheduleTask {
             seed = "";
         } else {
             seed = String.valueOf(world.getSeed());
-
         }
 
-        Message.sendConsole("&a━━━━━━━━━━━━━━  &e正在自动刷新 " + name + " 世界  &a━━━━━━━━━━━━━━");
-        Message.sendConsole(" ");
+        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+            Message.sendConsole("&a━━━━━━━━━━━━━━  &e正在自动刷新 " + name + " 世界  &a━━━━━━━━━━━━━━");
+            Message.sendConsole(" ");
 
-        boolean regenSuccess = multiverseCore.getMVWorldManager().regenWorld(name, true, true, seed);
+            boolean regenSuccess = multiverseCore.getMVWorldManager().regenWorld(name, true, true, seed);
 
-        if (regenSuccess) {
-            runResetCommand();
-        } else {
-            Message.sendConsole("&9&l" + Main.getInstance().getName() + "&6&l>> &c世界重置失败, 请检查是否是主世界, 主世界无法刷新");
-        }
+            if (regenSuccess) {
+                runResetCommand();
+            } else {
+                Message.sendConsole("&9&l" + Main.getInstance().getName() + "&6&l>> &c世界重置失败, 请检查是否是主世界, 主世界无法刷新");
+            }
 
-        scheduleConfig.setupNextScheduleTaskTime();
+            scheduleConfig.setupNextScheduleTaskTime();
 
-        Message.sendConsole(" ");
-        Message.sendConsole("&a━━━━━━━━━━━━━━  &e世界 " + name + " 自动刷新完毕  &a━━━━━━━━━━━━━━");
-
+            Message.sendConsole(" ");
+            Message.sendConsole("&a━━━━━━━━━━━━━━  &e世界 " + name + " 自动刷新完毕  &a━━━━━━━━━━━━━━");
+        }, 20);
     }
 
     private void runResetCommand() {
