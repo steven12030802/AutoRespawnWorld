@@ -80,7 +80,7 @@ public class Main extends JavaPlugin {
 
     private void setupScheduleTaskRunnable() {
         ScheduleTaskRunnable scheduleTaskRunnable = new ScheduleTaskRunnable();
-        scheduleTaskRunnable.runTaskTimer(this, 0, 100);
+        scheduleTaskRunnable.runTaskTimer(this, 1200, 100);
     }
 
     @Override
