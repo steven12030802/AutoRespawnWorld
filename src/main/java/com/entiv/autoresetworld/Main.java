@@ -32,7 +32,6 @@ public class Main extends JavaPlugin {
 
         saveDefaultConfig();
 
-        setupScheduleTaskRunnable();
         setupRespawnWorld();
         setupDeleteFileTask();
     }
@@ -76,11 +75,6 @@ public class Main extends JavaPlugin {
 
     public static MultiverseCore getMultiverseCore() {
         return multiverseCore;
-    }
-
-    private void setupScheduleTaskRunnable() {
-        ScheduleTaskRunnable scheduleTaskRunnable = new ScheduleTaskRunnable();
-        scheduleTaskRunnable.runTaskTimer(this, 1200, 100);
     }
 
     @Override
