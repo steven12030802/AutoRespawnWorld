@@ -15,4 +15,8 @@ public interface ScheduleTask {
     default void load() {
         scheduleTasks.add(this);
     }
+
+    void setExpired(boolean expired);
+
+    String getName();
 }

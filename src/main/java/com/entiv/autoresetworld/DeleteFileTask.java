@@ -17,6 +17,8 @@ public class DeleteFileTask implements ScheduleTask {
     private final ScheduleConfig scheduleConfig;
     private final ConfigurationSection section;
 
+    private boolean isExpired = false;
+
     public DeleteFileTask(String name) {
         this.name = name;
 
@@ -28,11 +30,26 @@ public class DeleteFileTask implements ScheduleTask {
 
     @Override
     public boolean isExpired() {
-        return scheduleConfig.isExpired();
+        if (scheduleConfig.isExpired()) {
+            isExpired = true;
+        }
+        return isExpired;
+    }
+
+    @Override
+    public void setExpired(boolean expired) {
+        isExpired = expired;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     @Override
     public void runTask() {
+
+        setExpired(false);
 
         SimpleFileVisitor<Path> visitor = new SimpleFileVisitor<Path>() {
 
@@ -91,4 +108,5 @@ public class DeleteFileTask implements ScheduleTask {
 
         scheduleConfig.setupNextScheduleTaskTime();
     }
+
 }

@@ -27,11 +27,12 @@ public class ScheduleConfig {
         return getConfig().getString("触发时间");
     }
 
+
     public ConfigurationSection getConfig() {
         FileConfiguration config = Main.getInstance().getConfig();
         ConfigurationSection section = config.getConfigurationSection(path);
 
-        if (section == null) throw new NullPointerException("配置文件错误, 请检查配置文件!");
+        if (section == null) throw new NullPointerException("配置文件错误, 路径 " + path + " 不存在, 请检查配置文件!");
 
         return section;
     }

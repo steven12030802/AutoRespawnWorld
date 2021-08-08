@@ -10,6 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
 
+//TODO 支持 papi 变量, 支持用指令刷新世界
 public class Main extends JavaPlugin {
 
     private static Main plugin;
@@ -34,6 +35,8 @@ public class Main extends JavaPlugin {
 
         setupRespawnWorld();
         setupDeleteFileTask();
+
+        ScheduleTaskRunnable.load();
     }
 
     @Override
@@ -80,7 +83,20 @@ public class Main extends JavaPlugin {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if (sender.isOp()) {
+        if (!sender.isOp()) return true;
+
+        if (args.length == 0) {
+            Message.send(sender,
+                    "",
+                    "&6━━━━━━━━━━━━━━&e  自动刷新世界指令帮助  &6━━━━━━━━━━━━━━",
+                    "",
+                    "&b ━ &a/asw reload &7重载配置文件",
+                    "&b ━ &a/asw reset 世界名 &7手动刷新世界"
+            );
+            return true;
+        }
+
+        if (args.length == 1) {
             Main plugin = Main.getInstance();
             plugin.reloadConfig();
 
@@ -90,7 +106,26 @@ public class Main extends JavaPlugin {
             setupDeleteFileTask();
 
             Message.send(sender, "&9&l" + plugin.getName() + "&6&l >> &a配置文件重载完毕");
+
+            return true;
         }
+
+        if (args.length == 2 && args[0].equalsIgnoreCase("reset")) {
+
+            String name = args[1];
+
+            for (ScheduleTask scheduleTask : ScheduleTask.scheduleTasks) {
+                if (name.equalsIgnoreCase(scheduleTask.getName())) {
+                    scheduleTask.setExpired(true);
+                    return true;
+                }
+            }
+
+            Message.send(sender, "&9&l" + plugin.getName() + "&6&l >> &c检测不到名为 &b" + name + "&c 的自动刷新任务!");
+
+
+        }
+
 
         return true;
     }

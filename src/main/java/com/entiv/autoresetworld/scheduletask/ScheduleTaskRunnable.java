@@ -5,11 +5,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class ScheduleTaskRunnable extends BukkitRunnable {
 
-    private static final BukkitRunnable scheduleTaskRunnable = new ScheduleTaskRunnable();
-
-    private ScheduleTaskRunnable() {
-        scheduleTaskRunnable.runTaskTimer(Main.getInstance(), 1200, 100);
-    }
+    private static ScheduleTaskRunnable scheduleTaskRunnable;
 
     @Override
     public void run() {
@@ -20,4 +16,12 @@ public class ScheduleTaskRunnable extends BukkitRunnable {
             }
         }
     }
+
+    public static void load() {
+        if (scheduleTaskRunnable == null) {
+            scheduleTaskRunnable = new ScheduleTaskRunnable();
+        }
+        scheduleTaskRunnable.runTaskTimer(Main.getInstance(), 0, 50);
+    }
+
 }

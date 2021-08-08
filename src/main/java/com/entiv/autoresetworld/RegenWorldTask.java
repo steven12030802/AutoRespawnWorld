@@ -16,6 +16,8 @@ public class RegenWorldTask implements ScheduleTask {
     private final ScheduleConfig scheduleConfig;
     private final ConfigurationSection section;
 
+    private boolean isExpired = false;
+
     public RegenWorldTask(String name) {
         this.name = name;
         this.world = Bukkit.getWorld(name);
@@ -28,7 +30,19 @@ public class RegenWorldTask implements ScheduleTask {
 
     @Override
     public boolean isExpired() {
-        return scheduleConfig.isExpired();
+        if (scheduleConfig.isExpired()) {
+            isExpired = true;
+        }
+        return isExpired;
+    }
+
+    public void setExpired(boolean expired) {
+        isExpired = expired;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -42,6 +56,9 @@ public class RegenWorldTask implements ScheduleTask {
     }
 
     public void regenWorld() {
+
+        scheduleConfig.setupNextScheduleTaskTime();
+        setExpired(false);
 
         MultiverseCore multiverseCore = Main.getMultiverseCore();
         boolean changeSeed = section.getBoolean("更换种子");
@@ -65,8 +82,6 @@ public class RegenWorldTask implements ScheduleTask {
             } else {
                 Message.sendConsole("&9&l" + Main.getInstance().getName() + "&6&l>> &c世界重置失败, 请检查是否是主世界, 主世界无法刷新");
             }
-
-            scheduleConfig.setupNextScheduleTaskTime();
 
             Message.sendConsole(" ");
             Message.sendConsole("&a━━━━━━━━━━━━━━  &e世界 " + name + " 自动刷新完毕  &a━━━━━━━━━━━━━━");

@@ -19,8 +19,7 @@ public class Message {
         }
     }
 
-    public static void send(CommandSender sender, String[] message) {
-
+    public static void send(CommandSender sender, String... message) {
         if (message == null || message.length == 0) return;
 
         sender.sendMessage(toColor(message));
