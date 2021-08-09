@@ -83,6 +83,10 @@ public class ScheduleConfig {
         int hour = Integer.parseInt(timeSetting[0]);
         int minute = Integer.parseInt(timeSetting[1]);
 
+        if (hour >= 24) {
+            hour = 0;
+        }
+
         LocalDateTime respawnTime = calculateRespawnTime(mode, day, hour, minute);
 
         String format = String.format("%d,%d,%d,%d,%d", respawnTime.getYear(), respawnTime.getMonthValue(), respawnTime.getDayOfMonth(), respawnTime.getHour(), respawnTime.getMinute());
