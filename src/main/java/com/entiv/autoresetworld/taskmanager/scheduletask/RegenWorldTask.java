@@ -1,7 +1,8 @@
-package com.entiv.autoresetworld;
+package com.entiv.autoresetworld.taskmanager.scheduletask;
 
-import com.entiv.autoresetworld.scheduletask.ScheduleConfig;
-import com.entiv.autoresetworld.scheduletask.ScheduleTask;
+import com.entiv.autoresetworld.Main;
+import com.entiv.autoresetworld.Message;
+import com.entiv.autoresetworld.taskmanager.ScheduleConfig;
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -9,40 +10,13 @@ import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.List;
 
-public class RegenWorldTask implements ScheduleTask {
+public class RegenWorldTask extends ScheduleTask {
 
-    private final String name;
     private final World world;
-    private final ScheduleConfig scheduleConfig;
-    private final ConfigurationSection section;
-
-    private boolean isExpired = false;
 
     public RegenWorldTask(String name) {
-        this.name = name;
+        super("自动刷新世界." + name, name);
         this.world = Bukkit.getWorld(name);
-
-        String path = "自动刷新世界." + name;
-
-        section = Main.getInstance().getConfig().getConfigurationSection(path);
-        scheduleConfig = new ScheduleConfig(path);
-    }
-
-    @Override
-    public boolean isExpired() {
-        if (scheduleConfig.isExpired()) {
-            isExpired = true;
-        }
-        return isExpired;
-    }
-
-    public void setExpired(boolean expired) {
-        isExpired = expired;
-    }
-
-    @Override
-    public String getName() {
-        return name;
     }
 
     @Override
@@ -93,5 +67,6 @@ public class RegenWorldTask implements ScheduleTask {
         for (String command : getResetCommand()) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%world%", world.getName()));
         }
+
     }
 }

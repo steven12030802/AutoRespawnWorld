@@ -5,5 +5,5 @@ version: ${version}
 depend:
   - Multiverse-Core
 commands:
-  AutoRespawnWorld:
+  AutoResetWorld:
     aliases: [ asw ]

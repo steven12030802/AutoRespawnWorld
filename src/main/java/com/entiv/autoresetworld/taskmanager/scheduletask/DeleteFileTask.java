@@ -1,47 +1,24 @@
-package com.entiv.autoresetworld;
+package com.entiv.autoresetworld.taskmanager.scheduletask;
 
-import com.entiv.autoresetworld.scheduletask.ScheduleConfig;
-import com.entiv.autoresetworld.scheduletask.ScheduleTask;
-import org.bukkit.configuration.ConfigurationSection;
+import com.entiv.autoresetworld.Main;
+import com.entiv.autoresetworld.Message;
+import org.apache.commons.lang.Validate;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.Period;
+import java.time.chrono.ChronoLocalDateTime;
 
-public class DeleteFileTask implements ScheduleTask {
-
-    private final String name;
-    private final ScheduleConfig scheduleConfig;
-    private final ConfigurationSection section;
-
-    private boolean isExpired = false;
+public class DeleteFileTask extends ScheduleTask {
 
     public DeleteFileTask(String name) {
-        this.name = name;
-
-        String path = "自动删除文件." + name;
-
-        section = Main.getInstance().getConfig().getConfigurationSection(path);
-        scheduleConfig = new ScheduleConfig(path);
+        super("自动删除文件." + name, name);
     }
 
-    @Override
-    public boolean isExpired() {
-        if (scheduleConfig.isExpired()) {
-            isExpired = true;
-        }
-        return isExpired;
-    }
-
-    @Override
-    public void setExpired(boolean expired) {
-        isExpired = expired;
-    }
-
-    @Override
     public String getName() {
         return name;
     }
@@ -56,11 +33,13 @@ public class DeleteFileTask implements ScheduleTask {
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
 
-                Instant fileTime = Files.readAttributes(file, BasicFileAttributes.class).lastAccessTime().toInstant();
+                Instant fileTime = Files.readAttributes(file, BasicFileAttributes.class).lastModifiedTime().toInstant();
+                Validate.notNull(section, "自动删除文件配置异常, 请检查配置");
+
                 int day = section.getInt("保留天数", 0);
 
                 Instant expiredTime = fileTime.plus(Period.ofDays(day));
-                boolean isExpiredFile = fileTime.isAfter(Instant.from(expiredTime));
+                boolean isExpiredFile = Instant.now().isAfter(expiredTime);
 
                 try {
                     if (isExpiredFile || day <= 0) {

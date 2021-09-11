@@ -2,20 +2,10 @@ plugins {
     id 'java'
 }
 
-apply plugin: 'maven'
-
 group 'com.entiv'
 version '1.4'
 
 repositories {
-
-    mavenCentral()
-    mavenLocal()
-//
-//    maven {
-//        name "Bungee-Chat"
-//        url 'https://repo.acrylicstyle.xyz/'
-//    }
 
     maven {
         name "Spigot-1.13.1"
@@ -62,7 +52,8 @@ repositories {
         url 'https://papermc.io/repo/repository/maven-public/'
     }
 
-
+    mavenCentral()
+    mavenLocal()
 }
 
 processResources {
@@ -89,8 +80,6 @@ dependencies {
 //    compileOnly "com.github.MilkBowl:VaultAPI:1.7"
 //    compile "com.entiv:SakuraLibrary:1.0"
     compileOnly 'com.onarandombox.multiversecore:Multiverse-Core:4.2.2'
-
-
 }
 
 [compileJava,compileTestJava]*.options*.encoding = 'UTF-8'

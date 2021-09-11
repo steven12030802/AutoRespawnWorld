@@ -1,6 +1,7 @@
-package com.entiv.autoresetworld.scheduletask;
+package com.entiv.autoresetworld.taskmanager;
 
 import com.entiv.autoresetworld.Main;
+import com.entiv.autoresetworld.taskmanager.scheduletask.ScheduleTask;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class ScheduleTaskRunnable extends BukkitRunnable {
