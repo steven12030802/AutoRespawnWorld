@@ -32,7 +32,16 @@
       # 可以使用下面的指令保持重生点区块加载, 去掉 # 符号开启即可
       #- 'mvm set keepspawninmemory true %world%'
 
-  # 支持添加更多世界, 复制上面的世界配置文件后修改世界名即可
+  # 自动刷新 world_test 世界, 支持添加更多世界, 像这样复制在下面添加即可
+  world_test:
+    日期设置: "month,1"
+    时间设置: "20:00"
+    触发时间: "-1"
+    更换种子: true
+    刷新执行指令:
+      - 'mvgamerule keepInventory true %world%'
+      - 'mvgamerule doImmediateRespawn true %world%'
+
 
 # 定时自动执行指令的功能
 自动执行指令:
