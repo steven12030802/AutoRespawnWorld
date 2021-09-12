@@ -13,6 +13,7 @@ public class ScheduleTaskRunnable extends BukkitRunnable {
         for (ScheduleTask scheduleTask : ScheduleTask.scheduleTasks) {
             if (scheduleTask.isExpired()) {
                 scheduleTask.runTask();
+                scheduleTask.taskComplete();
                 return;
             }
         }

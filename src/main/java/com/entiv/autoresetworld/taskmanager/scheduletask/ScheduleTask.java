@@ -44,6 +44,11 @@ public abstract class ScheduleTask {
         this.isExpired = isExpired;
     }
 
+    public void taskComplete() {
+        setExpired(false);
+        scheduleConfig.setupNextScheduleTaskTime();
+    }
+
     public String getName() {
         return name;
     }

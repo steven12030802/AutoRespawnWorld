@@ -13,7 +13,6 @@ public class CommandTask extends ScheduleTask {
     @Override
     public void runTask() {
         runCommand();
-        setExpired(false);
     }
 
     public List<String> getCommands() {

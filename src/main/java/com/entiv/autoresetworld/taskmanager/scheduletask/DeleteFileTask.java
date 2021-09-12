@@ -26,7 +26,6 @@ public class DeleteFileTask extends ScheduleTask {
     @Override
     public void runTask() {
 
-        setExpired(false);
 
         SimpleFileVisitor<Path> visitor = new SimpleFileVisitor<Path>() {
 
@@ -84,8 +83,5 @@ public class DeleteFileTask extends ScheduleTask {
 
         Message.sendConsole(" ");
         Message.sendConsole("&a━━━━━━━━━━━━━━  &e" + name + "删除完毕  &a━━━━━━━━━━━━━━");
-
-        scheduleConfig.setupNextScheduleTaskTime();
     }
-
 }

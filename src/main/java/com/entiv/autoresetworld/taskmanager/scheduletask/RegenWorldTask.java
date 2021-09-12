@@ -30,10 +30,6 @@ public class RegenWorldTask extends ScheduleTask {
     }
 
     public void regenWorld() {
-
-        scheduleConfig.setupNextScheduleTaskTime();
-        setExpired(false);
-
         MultiverseCore multiverseCore = Main.getMultiverseCore();
         boolean changeSeed = section.getBoolean("更换种子");
 
