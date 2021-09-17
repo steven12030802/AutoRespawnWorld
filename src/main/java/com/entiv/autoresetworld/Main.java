@@ -20,8 +20,9 @@ import java.util.stream.Stream;
 public class Main extends JavaPlugin {
 
     private static Main plugin;
-    private static MultiverseCore multiverseCore;
-    private static TaskManager taskManager;
+
+    private final MultiverseCore multiverseCore = (MultiverseCore) getServer().getPluginManager().getPlugin("Multiverse-Core");
+    private final TaskManager taskManager = new TaskManager();
 
     public static Main getInstance() {
         return plugin;
@@ -29,9 +30,8 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
+
         plugin = this;
-        multiverseCore = (MultiverseCore) Main.getInstance().getServer().getPluginManager().getPlugin("Multiverse-Core");
-        taskManager = new TaskManager();
 
         String[] message = {
                 "&e&l" + getName() + "&a 插件&e v" + getDescription().getVersion() + " &a已启用",
