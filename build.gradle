@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'com.entiv'
-version '1.5'
+version '1.6'
 
 repositories {
 
@@ -21,6 +21,7 @@ repositories {
         name "ProtocolLib"
         url "https://repo.dmulloy2.net/repository/public/"
     }
+
 
     maven {
         name "EssentialsX"
@@ -52,6 +53,12 @@ repositories {
         url 'https://papermc.io/repo/repository/maven-public/'
     }
 
+    maven {
+        name "PlaceholderAPI"
+        url 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
+    }
+
+
     mavenCentral()
     mavenLocal()
 }
@@ -80,6 +87,7 @@ dependencies {
 //    compileOnly "com.github.MilkBowl:VaultAPI:1.7"
 //    compile "com.entiv:SakuraLibrary:1.0"
     compileOnly 'com.onarandombox.multiversecore:Multiverse-Core:4.2.2'
+    compileOnly 'me.clip:placeholderapi:2.10.9'
 }
 
 [compileJava,compileTestJava]*.options*.encoding = 'UTF-8'

@@ -1,4 +1,4 @@
-package com.entiv.autoresetworld.taskmanager.scheduletask;
+package com.entiv.autoresetworld.task.scheduletask;
 
 import org.bukkit.Bukkit;
 

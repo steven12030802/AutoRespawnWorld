@@ -1,14 +1,13 @@
-package com.entiv.autoresetworld.taskmanager.scheduletask;
+package com.entiv.autoresetworld.task.scheduletask;
 
 import com.entiv.autoresetworld.Main;
-import com.entiv.autoresetworld.Message;
-import com.entiv.autoresetworld.taskmanager.ScheduleConfig;
+import com.entiv.autoresetworld.utils.Message;
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.List;
+import java.util.Objects;
 
 public class RegenWorldTask extends ScheduleTask {
 
@@ -16,7 +15,7 @@ public class RegenWorldTask extends ScheduleTask {
 
     public RegenWorldTask(String name) {
         super("自动刷新世界." + name, name);
-        this.world = Bukkit.getWorld(name);
+        this.world = Objects.requireNonNull(Bukkit.getWorld(name), "世界 " + name + " 不存在, 请检查配置文件");
     }
 
     @Override
@@ -30,7 +29,7 @@ public class RegenWorldTask extends ScheduleTask {
     }
 
     public void regenWorld() {
-        MultiverseCore multiverseCore = Main.getMultiverseCore();
+        MultiverseCore multiverseCore = Main.getInstance().getMultiverseCore();
         boolean changeSeed = section.getBoolean("更换种子");
 
         String seed;
@@ -55,7 +54,7 @@ public class RegenWorldTask extends ScheduleTask {
 
             Message.sendConsole(" ");
             Message.sendConsole("&a━━━━━━━━━━━━━━  &e世界 " + name + " 自动刷新完毕  &a━━━━━━━━━━━━━━");
-        }, 20);
+        }, 100);
     }
 
     private void runResetCommand() {

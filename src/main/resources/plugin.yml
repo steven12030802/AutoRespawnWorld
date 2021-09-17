@@ -4,6 +4,9 @@ version: ${version}
 
 depend:
   - Multiverse-Core
+softdepend:
+  - PlaceholderAPI
+
 commands:
   AutoResetWorld:
     aliases: [ asw ]

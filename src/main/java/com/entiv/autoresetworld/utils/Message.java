@@ -1,5 +1,6 @@
-package com.entiv.autoresetworld;
+package com.entiv.autoresetworld.utils;
 
+import com.entiv.autoresetworld.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
