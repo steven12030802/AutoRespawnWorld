@@ -80,7 +80,7 @@ public class TaskConfig {
         LocalTime time = LocalTime.parse(config.substring(index + 1).trim(), DateTimeFormatter.ofPattern("hh:mm:ss"));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd, HH:mm:ss");
 
-
+        //TODO 前三个模式需要单独分开, 不需要记录触发时间, 否则开服时全部过期会刷屏
         if (mode.equalsIgnoreCase("second")) {
 
             int second = Integer.parseInt(modeConfig);

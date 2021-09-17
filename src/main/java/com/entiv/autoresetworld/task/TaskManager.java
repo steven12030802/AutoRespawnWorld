@@ -16,6 +16,7 @@ public class TaskManager {
 
     private final Map<String, ScheduleTask> scheduleTasks = new HashMap<>();
 
+    //TODO 能否自动从包里找到对应的子类注册?
     public void loadScheduleTask() {
 
         setupScheduleTask("自动刷新世界", RegenWorldTask.class);

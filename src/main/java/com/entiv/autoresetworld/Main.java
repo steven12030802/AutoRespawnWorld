@@ -44,6 +44,7 @@ public class Main extends JavaPlugin {
         TaskRunnable.load();
 
         Objects.requireNonNull(getCommand("AutoResetWorld")).setTabCompleter(this);
+        //TODO 增加 if 判断, 软前置
         new AutoResetWorldExpansion().register();
 
     }
