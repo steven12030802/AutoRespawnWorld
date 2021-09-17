@@ -5,6 +5,7 @@ import com.entiv.autoresetworld.task.TaskRunnable;
 import com.entiv.autoresetworld.task.scheduletask.ScheduleTask;
 import com.entiv.autoresetworld.utils.Message;
 import com.onarandombox.MultiverseCore.MultiverseCore;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -44,9 +45,10 @@ public class Main extends JavaPlugin {
         TaskRunnable.load();
 
         Objects.requireNonNull(getCommand("AutoResetWorld")).setTabCompleter(this);
-        //TODO 增加 if 判断, 软前置
-        new AutoResetWorldExpansion().register();
 
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            new AutoResetWorldExpansion().register();
+        }
     }
 
     @Override
