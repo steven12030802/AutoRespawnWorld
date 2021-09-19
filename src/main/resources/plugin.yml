@@ -2,10 +2,9 @@ name: AutoResetWorld
 main: com.entiv.${name}.Main
 version: ${version}
 
-depend:
-  - Multiverse-Core
 softdepend:
   - PlaceholderAPI
+  - Multiverse-Core
 
 commands:
   AutoResetWorld:

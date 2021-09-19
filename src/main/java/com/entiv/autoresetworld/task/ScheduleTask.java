@@ -23,11 +23,12 @@ public abstract class ScheduleTask {
 
     public ScheduleTask(String path, String name) {
         this.name = name;
+        task = path.split("\\.")[0];
+
         Main plugin = Main.getInstance();
 
-        task = path.split("\\.")[0];
         config = Objects.requireNonNull(plugin.getConfig().getConfigurationSection(path), "配置文件路径 " + path + " 加载失败, 请检查配置文件");
-        taskMode = TaskMode.of(config.getString("日期设置", ""));
+        taskMode = TaskMode.of(config.getString("时间设置", ""));
         expiredTime = getExpiredTime();
     }
 
@@ -66,7 +67,7 @@ public abstract class ScheduleTask {
     }
 
     public void load() {
-        Main.getInstance().getTaskManager().addTask(name, this);
+        Main.getInstance().getTaskManager().addTask(getFullTaskName(), this);
     }
 
     public void setExpired(boolean isExpired) {
@@ -80,5 +81,9 @@ public abstract class ScheduleTask {
 
     public String getName() {
         return name;
+    }
+
+    public String getFullTaskName() {
+        return task + "-" + name;
     }
 }

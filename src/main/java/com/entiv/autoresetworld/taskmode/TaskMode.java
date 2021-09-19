@@ -58,6 +58,6 @@ public abstract class TaskMode {
         if (config.startsWith("month")) return new Month(config);
         if (config.startsWith("year")) return new Year(config);
 
-        throw new IllegalArgumentException("日期设置配置错误, 请检查配置文件");
+        throw new IllegalArgumentException("时间设置配置错误, 请检查配置文件");
     }
 }

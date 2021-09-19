@@ -120,9 +120,10 @@ public class Main extends JavaPlugin {
                     .collect(Collectors.toList());
         }
 
+        //TODO 补全新增任务名前缀
         if (args.length == 2) {
             return taskManager.getScheduleTasks().stream()
-                    .map(ScheduleTask::getName)
+                    .map(ScheduleTask::getFullTaskName)
                     .filter(s -> s.toLowerCase().startsWith(args[1]))
                     .collect(Collectors.toList());
         }

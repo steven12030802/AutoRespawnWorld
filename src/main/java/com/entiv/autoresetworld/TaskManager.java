@@ -19,7 +19,8 @@ public class TaskManager {
 
         setupScheduleTask("自动刷新世界", RegenWorldTask.class);
         setupScheduleTask("自动删除文件", DeleteFileTask.class);
-        setupScheduleTask("自动执行指令", CommandTask.class);
+        //TODO 修改自动执行指令命令前缀, 方便后续扩展, 增加延时功能, 这样有自动重启公告
+        setupScheduleTask("自动执行任务", CommandTask.class);
 
     }
 
