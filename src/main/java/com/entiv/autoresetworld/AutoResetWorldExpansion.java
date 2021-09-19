@@ -1,6 +1,6 @@
 package com.entiv.autoresetworld;
 
-import com.entiv.autoresetworld.task.scheduletask.ScheduleTask;
+import com.entiv.autoresetworld.task.ScheduleTask;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -32,7 +32,7 @@ public class AutoResetWorldExpansion extends PlaceholderExpansion {
         ScheduleTask scheduleTask = Main.getInstance().getTaskManager().getTask(task);
 
         long start = System.currentTimeMillis();
-        long end = scheduleTask.getScheduleDateTime().toEpochSecond(ZoneOffset.of("+8")) * 1000;
+        long end = scheduleTask.getExpiredTime().toEpochSecond(ZoneOffset.of("+8")) * 1000;
 
         return getInterval(start, end);
     }

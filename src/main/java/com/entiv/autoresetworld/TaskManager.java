@@ -1,10 +1,9 @@
-package com.entiv.autoresetworld.task;
+package com.entiv.autoresetworld;
 
-import com.entiv.autoresetworld.Main;
-import com.entiv.autoresetworld.task.scheduletask.CommandTask;
-import com.entiv.autoresetworld.task.scheduletask.DeleteFileTask;
-import com.entiv.autoresetworld.task.scheduletask.RegenWorldTask;
-import com.entiv.autoresetworld.task.scheduletask.ScheduleTask;
+import com.entiv.autoresetworld.task.CommandTask;
+import com.entiv.autoresetworld.task.DeleteFileTask;
+import com.entiv.autoresetworld.task.RegenWorldTask;
+import com.entiv.autoresetworld.task.ScheduleTask;
 import org.apache.commons.lang.Validate;
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -16,7 +15,6 @@ public class TaskManager {
 
     private final Map<String, ScheduleTask> scheduleTasks = new HashMap<>();
 
-    //TODO 能否自动从包里找到对应的子类注册?
     public void loadScheduleTask() {
 
         setupScheduleTask("自动刷新世界", RegenWorldTask.class);

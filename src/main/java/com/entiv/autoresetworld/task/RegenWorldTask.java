@@ -1,4 +1,4 @@
-package com.entiv.autoresetworld.task.scheduletask;
+package com.entiv.autoresetworld.task;
 
 import com.entiv.autoresetworld.Main;
 import com.entiv.autoresetworld.utils.Message;
@@ -25,12 +25,12 @@ public class RegenWorldTask extends ScheduleTask {
     }
 
     public List<String> getResetCommand() {
-        return section.getStringList("刷新执行指令");
+        return config.getStringList("刷新执行指令");
     }
 
     public void regenWorld() {
         MultiverseCore multiverseCore = Main.getInstance().getMultiverseCore();
-        boolean changeSeed = section.getBoolean("更换种子");
+        boolean changeSeed = config.getBoolean("更换种子");
 
         String seed;
 
@@ -40,21 +40,19 @@ public class RegenWorldTask extends ScheduleTask {
             seed = String.valueOf(world.getSeed());
         }
 
-        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
-            Message.sendConsole("&a━━━━━━━━━━━━━━  &e正在自动刷新 " + name + " 世界  &a━━━━━━━━━━━━━━");
-            Message.sendConsole(" ");
+        Message.sendConsole("&a━━━━━━━━━━━━━━  &e正在自动刷新 " + name + " 世界  &a━━━━━━━━━━━━━━");
+        Message.sendConsole(" ");
 
-            boolean regenSuccess = multiverseCore.getMVWorldManager().regenWorld(name, true, true, seed);
+        boolean regenSuccess = multiverseCore.getMVWorldManager().regenWorld(name, true, true, seed);
 
-            if (regenSuccess) {
-                runResetCommand();
-            } else {
-                Message.sendConsole("&9&l" + Main.getInstance().getName() + "&6&l>> &c世界重置失败, 请检查是否是主世界, 主世界无法刷新");
-            }
+        if (regenSuccess) {
+            runResetCommand();
+        } else {
+            Message.sendConsole("&9&l" + Main.getInstance().getName() + "&6&l>> &c世界重置失败, 请检查是否是主世界, 主世界无法刷新");
+        }
 
-            Message.sendConsole(" ");
-            Message.sendConsole("&a━━━━━━━━━━━━━━  &e世界 " + name + " 自动刷新完毕  &a━━━━━━━━━━━━━━");
-        }, 100);
+        Message.sendConsole(" ");
+        Message.sendConsole("&a━━━━━━━━━━━━━━  &e世界 " + name + " 自动刷新完毕  &a━━━━━━━━━━━━━━");
     }
 
     private void runResetCommand() {
@@ -62,6 +60,5 @@ public class RegenWorldTask extends ScheduleTask {
         for (String command : getResetCommand()) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%world%", world.getName()));
         }
-
     }
 }

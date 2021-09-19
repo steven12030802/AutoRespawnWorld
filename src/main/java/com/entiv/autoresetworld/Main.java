@@ -1,8 +1,6 @@
 package com.entiv.autoresetworld;
 
-import com.entiv.autoresetworld.task.TaskManager;
-import com.entiv.autoresetworld.task.TaskRunnable;
-import com.entiv.autoresetworld.task.scheduletask.ScheduleTask;
+import com.entiv.autoresetworld.task.ScheduleTask;
 import com.entiv.autoresetworld.utils.Message;
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import org.bukkit.Bukkit;
@@ -34,7 +32,7 @@ public class Main extends JavaPlugin {
         plugin = this;
 
         String[] message = {
-                "&e&l" + getName() + "&a 插件&e v" + getDescription().getVersion() + " &a已启用",
+                "&e" + getName() + "&a 插件&e v" + getDescription().getVersion() + " &a已启用",
                 "&a插件制作作者:&e EnTIv &aQQ群:&e 600731934"
         };
         Message.sendConsole(message);
@@ -54,7 +52,7 @@ public class Main extends JavaPlugin {
     @Override
     public void onDisable() {
         String[] message = {
-                "&e&l" + getName() + "&a 插件&e v" + getDescription().getVersion() + " &a已卸载",
+                "&e" + getName() + "&a 插件&e v" + getDescription().getVersion() + " &a已卸载",
                 "&a插件制作作者:&e EnTIv &aQQ群:&e 600731934"
         };
         Message.sendConsole(message);
@@ -91,7 +89,7 @@ public class Main extends JavaPlugin {
             taskManager.clearTasks();
             taskManager.loadScheduleTask();
 
-            Message.send(sender, "&9&l" + plugin.getName() + "&6&l >> &a配置文件重载完毕");
+            Message.send(sender, "&9" + plugin.getName() + "&6 >> &a配置文件重载完毕");
 
             return true;
         }

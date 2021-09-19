@@ -1,4 +1,4 @@
-package com.entiv.autoresetworld.task.scheduletask;
+package com.entiv.autoresetworld.task;
 
 import com.entiv.autoresetworld.Main;
 import com.entiv.autoresetworld.utils.Message;
@@ -23,7 +23,6 @@ public class DeleteFileTask extends ScheduleTask {
     @Override
     public void runTask() {
 
-
         SimpleFileVisitor<Path> visitor = new SimpleFileVisitor<Path>() {
 
             @Override
@@ -31,7 +30,7 @@ public class DeleteFileTask extends ScheduleTask {
 
                 Instant fileTime = Files.readAttributes(file, BasicFileAttributes.class).lastModifiedTime().toInstant();
 
-                int day = section.getInt("保留天数", 0);
+                int day = config.getInt("保留天数", 0);
 
                 Instant expiredTime = fileTime.plus(Period.ofDays(day));
                 boolean isExpiredFile = Instant.now().isAfter(expiredTime);
@@ -64,7 +63,7 @@ public class DeleteFileTask extends ScheduleTask {
             File dataFolder = Main.getInstance().getDataFolder();
             String dir = dataFolder.getAbsoluteFile().getParentFile().getParentFile().toString();
 
-            for (String configPath : section.getStringList("文件路径")) {
+            for (String configPath : config.getStringList("文件路径")) {
                 Path path = Paths.get(dir, configPath);
                 if (Files.exists(path)) {
                     Files.walkFileTree(path, visitor);

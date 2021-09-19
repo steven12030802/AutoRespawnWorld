@@ -1,4 +1,4 @@
-package com.entiv.autoresetworld.task.scheduletask;
+package com.entiv.autoresetworld.task;
 
 import org.bukkit.Bukkit;
 
@@ -16,7 +16,7 @@ public class CommandTask extends ScheduleTask {
     }
 
     public List<String> getCommands() {
-        return section.getStringList("执行指令");
+        return config.getStringList("执行指令");
     }
 
     private void runCommand() {
