@@ -123,7 +123,7 @@ public class Main extends JavaPlugin {
         //TODO 补全新增任务名前缀
         if (args.length == 2) {
             return taskManager.getScheduleTasks().stream()
-                    .map(ScheduleTask::getFullTaskName)
+                    .map(ScheduleTask::getName)
                     .filter(s -> s.toLowerCase().startsWith(args[1]))
                     .collect(Collectors.toList());
         }

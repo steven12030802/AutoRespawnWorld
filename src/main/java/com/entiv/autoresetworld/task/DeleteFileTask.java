@@ -13,7 +13,7 @@ import java.time.Period;
 public class DeleteFileTask extends ScheduleTask {
 
     public DeleteFileTask(String name) {
-        super("自动删除文件." + name, name);
+        super("自动删除文件." + name);
     }
 
     public String getName() {

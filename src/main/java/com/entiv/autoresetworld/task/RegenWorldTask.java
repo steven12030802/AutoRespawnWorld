@@ -14,7 +14,7 @@ public class RegenWorldTask extends ScheduleTask {
     private final World world;
 
     public RegenWorldTask(String name) {
-        super("自动刷新世界." + name, name);
+        super("自动刷新世界." + name);
         this.world = Objects.requireNonNull(Bukkit.getWorld(name), "世界 " + name + " 不存在, 请检查配置文件");
     }
 
@@ -40,10 +40,10 @@ public class RegenWorldTask extends ScheduleTask {
             seed = String.valueOf(world.getSeed());
         }
 
-        Message.sendConsole("&a━━━━━━━━━━━━━━  &e正在自动刷新 " + name + " 世界  &a━━━━━━━━━━━━━━");
+        Message.sendConsole("&a━━━━━━━━━━━━━━  &e正在自动刷新 " + world.getName() + " 世界  &a━━━━━━━━━━━━━━");
         Message.sendConsole(" ");
 
-        boolean regenSuccess = multiverseCore.getMVWorldManager().regenWorld(name, true, true, seed);
+        boolean regenSuccess = multiverseCore.getMVWorldManager().regenWorld(world.getName(), true, true, seed);
 
         if (regenSuccess) {
             runResetCommand();

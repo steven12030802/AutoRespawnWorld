@@ -10,7 +10,7 @@ import java.util.List;
 public class CommandTask extends ScheduleTask {
 
     public CommandTask(String name) {
-        super("自动执行任务." + name, name);
+        super("自动执行任务." + name);
     }
 
     @Override

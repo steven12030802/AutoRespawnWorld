@@ -13,7 +13,6 @@ import java.util.regex.Pattern;
 public abstract class ScheduleTask {
 
     protected final String name;
-    protected final String task;
 
     protected final ConfigurationSection config;
 
@@ -21,9 +20,8 @@ public abstract class ScheduleTask {
     protected TaskMode taskMode;
     protected LocalDateTime expiredTime;
 
-    public ScheduleTask(String path, String name) {
-        this.name = name;
-        task = path.split("\\.")[0];
+    public ScheduleTask(String path) {
+        this.name = path.replace(".", "-");
 
         Main plugin = Main.getInstance();
 
@@ -67,7 +65,7 @@ public abstract class ScheduleTask {
     }
 
     public void load() {
-        Main.getInstance().getTaskManager().addTask(getFullTaskName(), this);
+        Main.getInstance().getTaskManager().addTask(getName(), this);
     }
 
     public void setExpired(boolean isExpired) {
@@ -81,9 +79,5 @@ public abstract class ScheduleTask {
 
     public String getName() {
         return name;
-    }
-
-    public String getFullTaskName() {
-        return task + "-" + name;
     }
 }
