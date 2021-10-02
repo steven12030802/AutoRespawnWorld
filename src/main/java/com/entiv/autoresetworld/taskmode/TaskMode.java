@@ -11,18 +11,6 @@ public abstract class TaskMode {
 
     protected LocalTime localTime;
 
-    // second:30 代表每 30 秒刷新一次
-    // minute:10 代表每 10 分钟刷新一次
-    // hour:3 代表每 3 小时刷新一次
-    //
-    // date:10-01, 7:56:00 代表每年的 10 月 1 日 7:56 刷新一次
-    //
-    // day:1, 20:00:00 代表每天 20:00 刷新一次
-    // day:14, 0:00:00 代表每 14 天的 0:00 刷新一次
-    // week:4, 23:59:00 代表每周 4 的 23:59 刷新一次
-    // week:1, 6:00:00 代表每周 1 的 6:00 刷新一次
-    // month:15, 12:34:45 代表每月 15 日的 12:34:45 刷新一次
-    // year:233, 0:00:00 代表每年的第 233 天的 0:00:00 刷新一次
     public TaskMode(String config) {
 
         if (config.contains(",")) {
