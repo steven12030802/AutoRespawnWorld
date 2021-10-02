@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.regex.Pattern;
 
-//TODO 整一个记录时间的接口, 刷新完毕时判断是否时记录时间的接口, 是就强转并save
 public abstract class TaskMode {
 
     protected final String name;
