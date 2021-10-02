@@ -26,10 +26,12 @@ public class AutoResetWorldExpansion extends PlaceholderExpansion {
 
     @Override
     public String onPlaceholderRequest(Player player, @NotNull String params) {
-        if (!params.startsWith("countdown")) return null;
+        if (!params.startsWith("countdown_")) return "前缀错误";
 
         String task = params.substring("countdown".length() + 1);
         ScheduleTask scheduleTask = Main.getInstance().getTaskManager().getTask(task);
+
+        if (scheduleTask == null) return "任务不存在";
 
         long start = System.currentTimeMillis();
         long end = scheduleTask.getExpiredTime().toEpochSecond(ZoneOffset.of("+8")) * 1000;

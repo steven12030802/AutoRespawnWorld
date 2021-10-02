@@ -1,6 +1,7 @@
 # 自动刷新世界的功能
 自动刷新世界:
   # 在这里填写需要自动刷新的世界名, world_resource 就是当前所需刷新的世界名
+  # papi 倒计时变量示例: %AutoResetWorld_countdown_自动刷新世界-world_resource%
   world_resource:
 
     # second:30 代表每 30 秒刷新一次
@@ -45,12 +46,13 @@
 # 定时自动执行任务的功能
 自动执行任务:
   coi数据清理:
-    # 每天 3:30 执行 co i purge t:7d 指令
+    # 每天 03:30:00 执行 co i purge t:7d 指令
     时间设置: "day:1, 03:30:00"
     执行任务:
-      - 'console: co i purge t:7d'
+      - 'console: co l purge t:7d'
+  # papi 倒计时变量示例: %AutoResetWorld_countdown_自动执行任务-自动重启%
   自动重启:
-    # 每天 4 点执行 restart 指令重启服务器
+    # 每天 04:00:00 执行 restart 指令重启服务器
     时间设置: "day:1, 04:00:00"
     执行任务:
       - 'console: restart'
@@ -62,6 +64,7 @@
 # 自动删除文件功能
 自动删除文件:
   # 支持添加更多删除方案和删除路径
+  # papi 倒计时变量示例: %AutoResetWorld_countdown_自动删除文件-日志文件%
   日志文件:
     # 每天清理一次日志文件
     时间设置: "day:1, 00:00:00"

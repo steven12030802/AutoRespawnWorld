@@ -49,19 +49,11 @@ public abstract class ScheduleTask {
         Pattern pattern = Pattern.compile("^(?:(?!0000)[0-9]{4}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[0-9]{2}(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)-02-29), (?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d$");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd, HH:mm:ss");
 
-        // 如果找到且能用, 返回正确时间, 如果模式能保存, 储存时间, 再找一次, 如果不能, 直接返回准确时间
         if (pattern.matcher(time).find()) {
             return LocalDateTime.parse(time, formatter);
-        } else if (taskMode instanceof Preservable) {
-
-            Preservable preservableTask = (Preservable) taskMode;
-            String expiredTime = preservableTask.getExpiredTime().format(formatter);
-
-            preservableTask.saveExpiredTime(config.getCurrentPath(), expiredTime);
-            return LocalDateTime.parse(expiredTime, formatter);
+        } else {
+            return taskMode.getExpiredTime();
         }
-
-        return taskMode.getExpiredTime();
     }
 
     public void load() {
@@ -74,6 +66,16 @@ public abstract class ScheduleTask {
 
     public void taskComplete() {
         setExpired(false);
+
+        if (taskMode instanceof Preservable) {
+
+            Preservable preservableTask = (Preservable) taskMode;
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd, HH:mm:ss");
+
+            String expiredTime = preservableTask.getExpiredTime().format(formatter);
+            preservableTask.saveExpiredTime(config.getCurrentPath(), expiredTime);
+        }
+
         expiredTime = getExpiredTime();
     }
 

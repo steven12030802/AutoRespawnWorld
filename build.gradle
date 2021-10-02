@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'com.entiv'
-version '2.0'
+version '2.3'
 
 repositories {
 

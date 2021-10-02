@@ -23,6 +23,7 @@ public class DeleteFileTask extends ScheduleTask {
     @Override
     public void runTask() {
 
+        System.out.println("1");
         SimpleFileVisitor<Path> visitor = new SimpleFileVisitor<Path>() {
 
             @Override

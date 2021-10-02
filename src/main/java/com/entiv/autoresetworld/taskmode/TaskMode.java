@@ -24,7 +24,6 @@ public abstract class TaskMode {
     // week:1, 6:00:00 代表每周 1 的 6:00 刷新一次
     // month:15, 12:34:45 代表每月 15 日的 12:34:45 刷新一次
     // year:233, 0:00:00 代表每年的第 233 天的 0:00:00 刷新一次
-
     public TaskMode(String config) {
 
         if (config.contains(",")) {
