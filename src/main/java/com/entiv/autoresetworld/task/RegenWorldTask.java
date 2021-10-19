@@ -6,6 +6,7 @@ import com.onarandombox.MultiverseCore.MultiverseCore;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -56,6 +57,7 @@ public class RegenWorldTask extends ScheduleTask {
     }
 
     private void runResetCommand() {
+        if (getResetCommand() == null) return;
 
         for (String command : getResetCommand()) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%world%", world.getName()));

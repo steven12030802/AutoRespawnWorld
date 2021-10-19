@@ -16,12 +16,10 @@ public class TaskManager {
     private final Map<String, ScheduleTask> scheduleTasks = new HashMap<>();
 
     public void loadScheduleTask() {
-
         setupScheduleTask("自动刷新世界", RegenWorldTask.class);
         setupScheduleTask("自动删除文件", DeleteFileTask.class);
-        //TODO 修改自动执行指令命令前缀, 方便后续扩展, 增加延时功能, 这样有自动重启公告
+        //TODO 增加延时功能, 这样有自动重启公告
         setupScheduleTask("自动执行任务", CommandTask.class);
-
     }
 
     public Collection<ScheduleTask> getScheduleTasks() {
