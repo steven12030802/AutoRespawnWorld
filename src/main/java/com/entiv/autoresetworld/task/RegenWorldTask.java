@@ -53,7 +53,7 @@ public class RegenWorldTask extends ScheduleTask {
         }
 
         Message.sendConsole(" ");
-        Message.sendConsole("&a━━━━━━━━━━━━━━  &e世界 " + name + " 自动刷新完毕  &a━━━━━━━━━━━━━━");
+        Message.sendConsole("&a━━━━━━━━━━━━━━  &e世界 " + world.getName() + " 自动刷新完毕  &a━━━━━━━━━━━━━━");
     }
 
     private void runResetCommand() {
