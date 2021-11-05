@@ -3,6 +3,7 @@ package com.entiv.autoresetworld;
 import com.entiv.autoresetworld.task.ScheduleTask;
 import com.entiv.autoresetworld.utils.Message;
 import com.onarandombox.MultiverseCore.MultiverseCore;
+import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -74,10 +75,10 @@ public class Main extends JavaPlugin {
         if (args.length == 0) {
             Message.send(sender,
                     "",
-                    "&6━━━━━━━━━━━━━━&e  自动刷新世界指令帮助  &6━━━━━━━━━━━━━━",
+                    "&6━━━━━━━━━━━━━━&d  自动刷新世界指令帮助  &6━━━━━━━━━━━━━━",
                     "",
-                    "&b ━ &a/asw reload &7重载配置文件",
-                    "&b ━ &a/asw runtask 世界名 &7手动刷新世界"
+                    "&b ━ &d/asw reload &7重载配置文件",
+                    "&b ━ &d/asw runtask 任务类型-任务名称 &7手动执行任务"
             );
             return true;
         }
@@ -120,7 +121,6 @@ public class Main extends JavaPlugin {
                     .collect(Collectors.toList());
         }
 
-        //TODO 补全新增任务名前缀
         if (args.length == 2) {
             return taskManager.getScheduleTasks().stream()
                     .map(ScheduleTask::getName)
