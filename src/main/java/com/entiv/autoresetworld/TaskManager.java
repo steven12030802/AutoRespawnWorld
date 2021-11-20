@@ -4,6 +4,7 @@ import com.entiv.autoresetworld.task.CommandTask;
 import com.entiv.autoresetworld.task.DeleteFileTask;
 import com.entiv.autoresetworld.task.RegenWorldTask;
 import com.entiv.autoresetworld.task.ScheduleTask;
+import com.entiv.autoresetworld.utils.Message;
 import org.apache.commons.lang.Validate;
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -29,7 +30,10 @@ public class TaskManager {
     private void setupScheduleTask(String path, Class<? extends ScheduleTask> task) {
         ConfigurationSection section = Main.getInstance().getConfig().getConfigurationSection(path);
 
-        if (section == null) return;
+        if (section == null){
+            Message.sendConsole("任务 " + path + " 无内容，已跳过加载");
+            return;
+        }
 
         try {
 
