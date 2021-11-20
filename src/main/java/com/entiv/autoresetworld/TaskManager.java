@@ -28,13 +28,14 @@ public class TaskManager {
 
     private void setupScheduleTask(String path, Class<? extends ScheduleTask> task) {
         ConfigurationSection section = Main.getInstance().getConfig().getConfigurationSection(path);
-        Validate.notNull(section, "配置文件路径 " + path + " 错误, 请检查配置文件");
+
+        if (section == null) return;
 
         try {
 
             for (String taskName : section.getKeys(false)) {
-                ScheduleTask regenWorldTask = task.getDeclaredConstructor(String.class).newInstance(taskName);
-                regenWorldTask.load();
+                ScheduleTask scheduleTask = task.getDeclaredConstructor(String.class).newInstance(taskName);
+                scheduleTask.load();
             }
 
         } catch (Exception e) {
