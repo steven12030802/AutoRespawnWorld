@@ -16,13 +16,19 @@ public class RegenWorldTask extends ScheduleTask {
 
     public RegenWorldTask(String name) {
         super("自动刷新世界." + name);
-        this.world = Objects.requireNonNull(Bukkit.getWorld(name), "世界 " + name + " 不存在, 请检查配置文件");
+        this.world = Bukkit.getWorld(name);
     }
 
     @Override
     public void runTask() {
-        world.getPlayers().forEach(player -> player.performCommand("spawn"));
-        regenWorld();
+
+        if (world == null) {
+            Message.sendConsole("世界 " + name + " 不存在, 请检查配置文件");
+        } else {
+            world.getPlayers().forEach(player -> player.performCommand("spawn"));
+            regenWorld();
+        }
+
     }
 
     public List<String> getResetCommand() {
