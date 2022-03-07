@@ -25,7 +25,6 @@ public class RegenWorldTask extends ScheduleTask {
         if (world == null) {
             Message.sendConsole("世界 " + name + " 不存在, 请检查配置文件");
         } else {
-            world.getPlayers().forEach(player -> player.performCommand("spawn"));
             regenWorld();
         }
 
