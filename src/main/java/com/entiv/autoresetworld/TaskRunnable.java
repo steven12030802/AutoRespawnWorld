@@ -12,8 +12,13 @@ public class TaskRunnable extends BukkitRunnable {
 
         for (ScheduleTask scheduleTask : Main.getInstance().getTaskManager().getScheduleTasks()) {
             if (scheduleTask.isExpired()) {
-                scheduleTask.runTask();
-                scheduleTask.taskComplete();
+                try {
+                    scheduleTask.runTask();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    scheduleTask.taskComplete();
+                }
                 return;
             }
         }

@@ -3,11 +3,13 @@ package com.entiv.autoresetworld.utils;
 import com.entiv.autoresetworld.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Objects;
 
 public class Message {
 
@@ -53,6 +55,20 @@ public class Message {
         for (String string : message) {
             sendConsole(string);
         }
+    }
+
+    public static void sendOnlineOP(String message) {
+        if (message == null || message.isEmpty()) return;
+
+        Bukkit.getOperators().stream()
+                .map(OfflinePlayer::getPlayer)
+                .filter(Objects::nonNull)
+                .forEach(player -> player.sendMessage(message));
+    }
+
+    public static void sendConsoleAndOP(String message) {
+        sendOnlineOP(message);
+        sendConsole(message);
     }
 
     public static void sendAllPlayers(String message) {

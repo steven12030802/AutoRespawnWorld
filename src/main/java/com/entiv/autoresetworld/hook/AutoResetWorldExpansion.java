@@ -1,5 +1,6 @@
-package com.entiv.autoresetworld;
+package com.entiv.autoresetworld.hook;
 
+import com.entiv.autoresetworld.Main;
 import com.entiv.autoresetworld.task.ScheduleTask;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;

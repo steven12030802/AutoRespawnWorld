@@ -37,12 +37,19 @@
 
   # 自动刷新 world_test 世界, 支持添加更多世界, 像这样复制在下面添加即可
   world_test:
-    时间设置: "week:7, 20:00:00"
+    时间设置: "week:7, 10:00:00"
     更换种子: true
     刷新执行指令:
       - 'mvgamerule keepInventory true %world%'
       - 'mvgamerule doImmediateRespawn true %world%'
-
+      -
+  # 自动刷新 资源 世界, 支持添加更多世界, 像这样复制在下面添加即可
+  资源:
+    时间设置: "week:7, 10:00:00"
+    更换种子: true
+    刷新执行指令:
+      - 'mvgamerule keepInventory true %world%'
+      - 'mvgamerule doImmediateRespawn true %world%'
 # 定时自动执行任务的功能
 自动执行任务:
   coi数据清理:

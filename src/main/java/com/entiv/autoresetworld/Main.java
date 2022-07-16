@@ -1,20 +1,42 @@
 package com.entiv.autoresetworld;
 
+import com.entiv.autoresetworld.hook.AutoResetWorldExpansion;
 import com.entiv.autoresetworld.task.ScheduleTask;
 import com.entiv.autoresetworld.utils.Message;
 import com.onarandombox.MultiverseCore.MultiverseCore;
-import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.world.WorldInitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+//TODO 组合任务，例如 unload 地图后删文件后 restart，把任务概念取消 -> 一个任务设置时间，然后可以在下面放置任务
+// 模板世界功能
+
+/*
+强制删除任务:
+  时间设置: "day:1, 00:00:00"
+  任务列表:
+    - "刷新世界: world_resource, 更换种子: true"
+    - "删除文件: logs, 保留天数: 7"
+    - "删除文件: crash-reports, 保留天数: 7"
+    - "执行指令: co l purge t:7d"
+* */
 
 public class Main extends JavaPlugin {
 

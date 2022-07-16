@@ -1,14 +1,13 @@
 package com.entiv.autoresetworld.task;
 
 import com.entiv.autoresetworld.Main;
+import com.entiv.autoresetworld.hook.MultiverseCoreHook;
 import com.entiv.autoresetworld.utils.Message;
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class RegenWorldTask extends ScheduleTask {
 

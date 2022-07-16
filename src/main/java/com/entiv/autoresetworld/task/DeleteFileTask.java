@@ -42,7 +42,8 @@ public class DeleteFileTask extends ScheduleTask {
                     }
 
                 } catch (FileSystemException e) {
-                    Message.sendConsole("&c文件 &e" + Paths.get(e.getFile()).getFileName() + " &c无法删除, 已跳过");
+                    Message.sendConsole("&c文件 &e" + Paths.get(e.getFile()).getFileName() + " &c被占用, 无法删除，将会在关服时删除");
+                    file.toFile().deleteOnExit();
                 }
 
                 return FileVisitResult.CONTINUE;
